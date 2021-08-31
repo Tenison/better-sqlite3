@@ -29,6 +29,36 @@ let db = new Database('example.db');
 const createExampleTable = "CREATE TABLE IF NOT EXISTS personalInfo ("'name' TEXT NOT NULL,  'year' TEXT NOT NULL, 'nickName' VARCHAR(10) NOT NULL);"
 db.exec(createExampleTable);
 ```
+## Insert into table
+```js
+const insertIntoDb = db.prepare('INSERT INTO personalInfo VALUES (?, ?, ?)');
+
+// The following are equivalent.
+insertIntoDb.run('Alex', '1994', 'THT');
+// OR
+insertIntoDb.run(['Yaw', '1990', 'NET');
+```
+Another great method to insert 
+```js
+const insertIntoDb = db.prepare('INSERT INTO personalInfo VALUES (@name, @year, @nickName)');
+//OR
+const insertIntoDb = db.prepare('INSERT INTO personalInfo VALUES ($name, $year, $nickName)');
+
+insertIntoDb.run({name: 'John', year: '2000', nickname: 'MTI'});
+
+//We can insert in one statment
+const insertIntoDb = db.prepare('INSERT INTO personalInfo VALUES ($name, $year, $nickName)').run({name: 'John', year: '2000', nickname: 'MTI'});
+```
+This method can be used to insert only some parameters into database when working with default values
+```js
+const insertIntoDb = db.prepare("INSERT INTO personalInfo (name, year, nickName) VALUES (?, ?, ?)").run(['Osei', '2021', 'MIT']);
+```
+## I will add select statments soon!!! thanks 
+
+## Close Database 
+```js
+db.close();
+```
 
 ## Why should I use this instead of [node-sqlite3](https://github.com/mapbox/node-sqlite3)?
 
