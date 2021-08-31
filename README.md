@@ -26,7 +26,7 @@ let db = new Database('example.db');
 
 ## Create Tables
 ```js
-const createExampleTable = "CREATE TABLE IF NOT EXISTS personalInfo ("'name' TEXT NOT NULL,  'year' TEXT NOT NULL, 'nickName' VARCHAR(10) NOT NULL);"
+const createExampleTable = "CREATE TABLE IF NOT EXISTS personalInfo ("'name' TEXT NOT NULL, 'year' TEXT NOT NULL, 'nickName' VARCHAR(10) NOT NULL);"
 db.exec(createExampleTable);
 ```
 ## Insert into table
