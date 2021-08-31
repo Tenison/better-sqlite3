@@ -1,22 +1,3 @@
-# better-sqlite3 [![Build Status](https://github.com/JoshuaWise/better-sqlite3/actions/workflows/build.yml/badge.svg)](https://github.com/JoshuaWise/better-sqlite3/actions/workflows/build.yml?query=branch%3Amaster)
-
-The fastest and simplest library for SQLite3 in Node.js.
-
-- Full transaction support
-- High performance, efficiency, and safety
-- Easy-to-use synchronous API *(better concurrency than an asynchronous API... yes, you read that correctly)*
-- Support for user-defined functions, aggregates, virtual tables, and extensions
-- 64-bit integers *(invisible until you need them)*
-- Worker thread support *(for large/slow queries)*
-
-## Help this project stay strong! &#128170;
-
-`better-sqlite3` is used by thousands of developers and engineers on a daily basis. Long nights and weekends were spent keeping this project strong and dependable, with no ask for compensation or funding, until now. If your company uses `better-sqlite3`, ask your manager to consider supporting the project:
-
-- [Become a GitHub sponsor](https://github.com/sponsors/JoshuaWise)
-- [Become a backer on Patreon](https://www.patreon.com/joshuawise)
-- [Make a one-time donation on PayPal](https://www.paypal.me/joshuathomaswise)
-
 ## How other libraries compare
 
 |   |select 1 row &nbsp;`get()`&nbsp;|select 100 rows &nbsp;&nbsp;`all()`&nbsp;&nbsp;|select 100 rows `iterate()` 1-by-1|insert 1 row `run()`|insert 100 rows in a transaction|
@@ -37,12 +18,16 @@ npm install better-sqlite3
 > If you have trouble installing, check the [troubleshooting guide](./docs/troubleshooting.md).
 
 ## Usage
-
+## Initialise
 ```js
-const db = require('better-sqlite3')('foobar.db', options);
+const Database = require('better-sqlite3', { verbose: console.log });
+let db = new Database('example.db');
+```
 
-const row = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
-console.log(row.firstName, row.lastName, row.email);
+## Create Tables
+```js
+const createExampleTable = "CREATE TABLE IF NOT EXISTS personalInfo ("'name' TEXT NOT NULL,  'year' TEXT NOT NULL, 'nickName' VARCHAR(10) NOT NULL);"
+db.exec(createExampleTable);
 ```
 
 ## Why should I use this instead of [node-sqlite3](https://github.com/mapbox/node-sqlite3)?
