@@ -36,7 +36,7 @@ const insertIntoDb = db.prepare('INSERT INTO personalInfo VALUES (?, ?, ?)');
 // The following are equivalent.
 insertIntoDb.run('Alex', '1994', 'THT');
 // OR
-insertIntoDb.run(['Yaw', '1990', 'NET');
+insertIntoDb.run(['Yaw', '1990', 'NET']);
 ```
 Another great method to insert 
 ```js
