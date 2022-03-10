@@ -2,6 +2,8 @@
 
 - [class `Database`](#class-database)
 - [class `Statement`](#class-statement)
+- [class `SqliteError`](#class-sqliteerror)
+- [Binding Parameters](#binding-parameters)
 
 # class *Database*
 
@@ -34,6 +36,8 @@ Various options are accepted:
 - `options.timeout`: the number of milliseconds to wait when executing queries on a locked database, before throwing a `SQLITE_BUSY` error (default: `5000`).
 
 - `options.verbose`: provide a function that gets called with every SQL string executed by the database connection (default: `null`).
+
+- `options.nativeBinding`: if you're using a complicated build system that moves, transforms, or concatenates your JS files, `better-sqlite3` might have trouble locating its native C++ addon (`better_sqlite3.node`). If you get an error that looks like [this](https://github.com/JoshuaWise/better-sqlite3/issues/534#issuecomment-757907190), you can solve it by using this option to provide the file path of `better_sqlite3.node` (relative to the current working directory).
 
 ```js
 const Database = require('better-sqlite3');
@@ -595,6 +599,16 @@ console.log(cat.name); // => "Joey"
 **.reader -> _boolean_** - Whether the prepared statement returns data.
 
 **.readonly -> _boolean_** - Whether the prepared statement is readonly, meaning it does not mutate the database (note that [SQL functions might still change the database indirectly](https://www.sqlite.org/c3ref/stmt_readonly.html) as a side effect, even if the `.readonly` property is `true`).
+
+**.busy -> _boolean_** - Whether the prepared statement is busy executing a query via the [`.iterate()`](#iteratebindparameters---iterator) method.
+
+# class *SqliteError*
+
+Whenever an error occurs within SQLite3, a `SqliteError` object will be thrown. `SqliteError` is a subclass of `Error`. Every `SqliteError` object has a `code` property, which is a string matching one of error codes defined [here](https://sqlite.org/rescode.html) (for example, `"SQLITE_CONSTRAINT"`).
+
+If you receive a `SqliteError`, it probably means you're using SQLite3 incorrectly. The error didn't originate in `better-sqlite3`, so it's probably not an issue with `better-sqlite3`. It's recommended that you learn about the meaning of the error [here](https://sqlite.org/rescode.html), and perhaps learn more about how to use SQLite3 by reading [their docs](https://sqlite.org/docs.html).
+
+> In the unlikely scenario that SQLite3 throws an error that is not recognized by `better-sqlite3` (this would be considered a bug in `better-sqlite3`), the `code` property will be `"UNKNOWN_SQLITE_ERROR_NNNN"`, where `NNNN` is the numeric error code. If this happens to you, please report it as an [issue](https://github.com/JoshuaWise/better-sqlite3/issues).
 
 # Binding Parameters
 

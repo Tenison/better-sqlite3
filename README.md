@@ -13,9 +13,7 @@
 npm install better-sqlite3
 ```
 
-> You must be using Node.js v10.20.1 or above. Prebuilt binaries are available for [LTS versions](https://nodejs.org/en/about/releases/).
-
-> If you have trouble installing, check the [troubleshooting guide](./docs/troubleshooting.md).
+> You must be using Node.js v10.20.1 or above. Prebuilt binaries are available for [LTS versions](https://nodejs.org/en/about/releases/). If you have trouble installing, check the [troubleshooting guide](./docs/troubleshooting.md).
 
 ## Usage
 ## Initialise
@@ -58,6 +56,13 @@ const insertIntoDb = db.prepare("INSERT INTO personalInfo (name, year, nickName)
 ## Close Database 
 ```js
 db.close();
+```
+
+##### In ES6 module notation:
+
+```js
+import Database from 'better-sqlite3';
+const db = new Database('foobar.db', options);
 ```
 
 ## Why should I use this instead of [node-sqlite3](https://github.com/mapbox/node-sqlite3)?
